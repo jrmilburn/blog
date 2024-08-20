@@ -2,6 +2,10 @@ const { prisma } = require("../config/passport");
 
 async function getUsers(req, res) {
 
+    const users = await prisma.user.findMany();
+
+    return res.send(users);
+
 }
 
 async function getUser(req, res) {
@@ -12,7 +16,7 @@ async function getUser(req, res) {
         }
     })
 
-    res.send(user);
+    return res.send(user);
 
 }
 
@@ -32,7 +36,7 @@ async function createUser(req, res) {
         }
     })
 
-    res.send(user);
+    return res.send(user);
 
 }
 
