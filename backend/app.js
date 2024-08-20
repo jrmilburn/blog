@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const session = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { prisma } = require("./config/passport");
 const { adminRouter, postRouter, userRouter } = require("./routes/indexRouter");
@@ -28,7 +29,7 @@ app.use(passport.session());
 require("./config/passport");
 
 //Define routes
-app.use("/post", postRouter);
+app.use("/posts", postRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 

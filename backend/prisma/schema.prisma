@@ -22,7 +22,7 @@ model User {
   role         Role      @default(BASIC)
   writtenPosts Post[]    @relation("WrittenPosts")
   createdAt    DateTime  @default(now())
-  updatedAt    DateTime
+  updatedAt    DateTime   ?
   comment      Comment[]
 }
 
