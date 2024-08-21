@@ -1,0 +1,66 @@
+.nav {
+
+    margin: auto;
+    padding: 2rem;
+    position: fixed;
+    right: 0;
+    top: 10%;
+
+}
+
+a {
+
+    text-decoration: none;
+    color: #838D8A;
+    padding: 0rem 0.5rem;
+    font-size: 1.25rem;
+    position: relative;
+
+    transition: transform 0.25s;
+
+}
+
+a:hover {
+
+    cursor: crosshair;
+
+}
+
+.link-container {
+
+    position: relative;
+    height: 1.75rem;
+    overflow: hidden;
+    margin: 0.25rem 0;
+
+}
+
+.link {
+
+    display: flex;
+    flex-direction: column;
+
+    transition: scale 0.3s;
+
+}
+
+.link-container:hover .link {
+
+    scale: 1.05;
+
+}
+
+.nav-links{
+
+    position: absolute;
+    top: 5%;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 1rem 0 0 1rem;
+    border: 1px solid #838D8A;
+
+    transform: translateX(1%);
+
+}

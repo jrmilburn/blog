@@ -1,7 +1,6 @@
 const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -10,7 +9,7 @@ const prisma = new PrismaClient();
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secret: process.env.JWT_SECRET, 
+    secretOrKey: process.env.JWT_SECRET, 
 }
 
 const jwtVerify = async (jwtPayload, done) => {

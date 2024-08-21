@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
+const cors = require("cors");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { prisma } = require("./config/passport");
 const { adminRouter, postRouter, userRouter, authenticationRouter } = require("./routes/indexRouter");
@@ -9,6 +10,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 app.use(session({
     secret: process.env.SECRET,

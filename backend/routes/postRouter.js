@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const postController = require("../controllers/postController");
 const commentController = require("../controllers/commentController");
+const { passport } = require("../config/passport");
 
 const postRouter = Router();
 
@@ -9,19 +10,19 @@ const postRouter = Router();
 postRouter.get("/", postController.getPosts);
 postRouter.get("/:postid", postController.getPost);
 
-postRouter.post("/", postController.createPost);
+postRouter.post("/", passport.authenticate('jwt', { session: false }), postController.createPost);
 
-postRouter.put("/:postid", postController.editPost);
+postRouter.put("/:postid", passport.authenticate('jwt', { session: false }), postController.editPost);
 
-postRouter.delete("/:postid", postController.deletePost);
+postRouter.delete("/:postid", passport.authenticate('jwt', { session: false }), postController.deletePost);
 
 /**Comments */
 
 postRouter.get("/:postid/comments", commentController.getComments);
 
-postRouter.post("/:postid/comments", commentController.createComment);
+postRouter.post("/:postid/comments", passport.authenticate('jwt', { session: false }), commentController.createComment);
 
-postRouter.put("/:postid/comments/:commentid", commentController.updateComment);
+postRouter.put("/:postid/comments/:commentid", commentController.editComment);
 
 postRouter.delete("/:postid/comments/:commentid", commentController.deleteComment);
 
