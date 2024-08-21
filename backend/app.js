@@ -3,9 +3,12 @@ const passport = require("passport");
 const session = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { prisma } = require("./config/passport");
-const { adminRouter, postRouter, userRouter } = require("./routes/indexRouter");
+const { adminRouter, postRouter, userRouter, authenticationRouter } = require("./routes/indexRouter");
 
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(session({
     secret: process.env.SECRET,
@@ -32,6 +35,7 @@ require("./config/passport");
 app.use("/posts", postRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
+app.use("/", authenticationRouter);
 
 const PORT = process.env.PORT || 3000;
 
