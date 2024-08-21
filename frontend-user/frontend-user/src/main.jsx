@@ -5,6 +5,10 @@ import './index.css'
 
 import Root from './components/root.jsx';
 import Posts from './components/posts.jsx';
+import Homepage from './components/homepage.jsx';
+import Post from './components/post.jsx';
+import Works from './components/works.jsx';
+import Contact from './components/contact.jsx';
 
 function App() {
 
@@ -12,7 +16,11 @@ function App() {
     createRoutesFromElements(
       <Route path='/' element={<Root />} >
 
-        <Route index element={<Posts />} />
+        <Route index element={<Homepage />} />
+        <Route path='works' element={<Works />} />
+        <Route path='blog' element={<Posts />} />
+        <Route path='/blog/:id' element={<Post />} />
+        <Route path='contact' element={<Contact />} />
     
       </Route>
     )

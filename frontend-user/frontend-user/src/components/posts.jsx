@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react';
+import styles from './styles/posts.module.css';
+import AnimatedPage from './AnimatedPage';
+import { Link } from 'react-router-dom';
+import formatDate from './formatDate';
+
 
 export default function Posts() {
     const [data, setData] = useState(null);
@@ -23,23 +28,30 @@ export default function Posts() {
             });
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return (
+        <div className={styles["loading"]}>
+            Loading...
+        </div>
+    );
     if (error) return <p>Error: {error.message}</p>;
 
     console.log(data);
 
     return (
-        <div>
-            <h1>Posts</h1>
-            {data && data.posts.map((post, index) => (
-                <div key={index}>
+        <AnimatedPage>
+            <div>
+                <h1>Posts</h1>
+                {data && data.posts.map((post, index) => (
+                    <div key={index} className={styles["post"]}>
 
-                    <h3>{post.title}</h3>
-                    <p>{post.conent}</p>
-                    <p>Created: {post.createdAt}</p>
+                        <h3>{post.title}</h3>
+                        <p>{post.content}</p>
+                        <p>Created: {formatDate(post.createdAt)}</p>
+                        <Link to={`/blog/${post.id}`}>Read more</Link>
 
-                </div>
-            ))}
-        </div>
+                    </div>
+                ))}
+            </div>
+        </AnimatedPage>
     );
 }

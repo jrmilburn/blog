@@ -6,7 +6,11 @@ export default function Root() {
     return(
        
         <>
+
             <div className={styles["nav"]}>
+                <div className={styles["header"]}>
+                    <h2>JM.</h2>
+                </div>
                 <ul>
                     <div className={styles["nav-links"]}>
                         <div className={styles["link-container"]}>
@@ -30,8 +34,8 @@ export default function Root() {
                         <div className={styles["link-container"]}>
                             <div className={styles["link"]}>
                                 <NavLink
-                                    to='products'>
-                                    Products
+                                    to='blog'>
+                                    Blog
                                 </NavLink>
                             </div>
                         </div>

@@ -1,0 +1,17 @@
+.contact {
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 0;
+
+}
+
+.contact h1 {
+
+    padding: 0 0 2rem 0;
+    font-size: 4rem;
+    text-align: center;
+    color: #E98074;
+
+}
