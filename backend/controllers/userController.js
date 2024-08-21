@@ -1,4 +1,4 @@
-const { prisma } = require("../config/passport");
+const { prisma, generateToken } = require("../config/passport");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -56,9 +56,7 @@ async function createUser(req, res) {
                 }
             });
 
-            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-
-            return res.send(user, token);
+            return res.redirect("/login");
 
         } catch(err) {
 
@@ -89,7 +87,7 @@ async function loginUser(req, res) {
             return res.status(400).send("Invalid email or password");
         }
 
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' } );
+        const token = generateToken();
 
         return res.json({ token });
 

@@ -1,64 +1,43 @@
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("@prisma/client");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const prisma = new PrismaClient();
 
-const verifyCallback = async (username, password, done) => {
+const jwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secret: process.env.JWT_SECRET, 
+}
 
+const jwtVerify = async (jwtPayload, done) => {
     try {
-
         const user = await prisma.user.findUnique({
-            where: {
-                username: username
-            }
+            where: { id: jwtPayload.userid},
         });
 
         if(!user) {
-            return done(null, false, { message: "Incorrect username" });
+            return done(null, false, {message: "User not found"});
         }
 
-        const match = await bcrypt.compare(password, user.password);
-
-        if(!match) {
-            return done(null, false, { message: "Incorrect password" });
-        }
-
-    return done(null, user);
-
+        return done(null, user);
     } catch(err) {
-        return done(err);
+        console.error(err);
     }
-
 };
 
-const strategy = new LocalStrategy(verifyCallback);
+const strategy = new JwtStrategy(jwtOptions, jwtVerify);
 passport.use(strategy);
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-    try {
-    
-        const user = await prisma.user.findUnique({
-            where: { id: id },
-        });
-
-        if(!user) {
-            return done(new Error("User not found"));
-        }
-
-        done(null, user);
-        
-    } catch(err) {
-        done(err);
-    }
-});
+const generateToken = (user) => {
+    return jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+}
 
 module.exports = {
     passport,
+    generateToken,
     prisma
 };
