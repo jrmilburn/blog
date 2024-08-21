@@ -42,9 +42,25 @@ async function createUser(req, res) {
 
 async function updateUser(req, res) {
 
+    const user = await prisma.user.update({
+        where: {
+            id: req.params.userid,
+        },
+        data: {
+            name: req.body.name,
+            email: req.body.email,
+        }
+    })
+
 }
 
 async function deleteUser(req, res) {
+
+    const user = await prisma.user.delete({
+        where: {
+            id: req.params.userid,
+        }
+    })
 
 }
 
