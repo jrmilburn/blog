@@ -18,11 +18,15 @@ async function getPost(req, res) {
 
     const postId = req.params.postid;
 
-    const post = await prisma.post.findUnique({
-        id: postId,
+    const post = await prisma.post.findFirst({
+        where: {
+            id: postId
+        },
     });
 
-    return post;
+    return res.json({
+        post
+    });
 
 }
 

@@ -1,6 +1,7 @@
-import styles from './styles/homepage.module.css'
-import { Link } from 'react-router-dom'
-import AnimatedPage from './AnimatedPage'
+import styles from './styles/homepage.module.css';
+import { Link } from 'react-router-dom';
+import AnimatedPage from './AnimatedPage';
+import logo from '../assets/selfie.jpg';
 
 export default function Homepage() {
 
@@ -9,7 +10,7 @@ export default function Homepage() {
             <div className={styles["homepage"]}>
                 <h1>joemilburn.com.au</h1>
                 <div className={styles["desc-container"]}>
-                    <div className={styles["img-container"]}><img src="" alt="" /></div>
+                    <div className={styles["img-container"]}><img src={logo} alt="" /></div>
                     <ul>
                         <h2>Software Development</h2>
                     </ul>

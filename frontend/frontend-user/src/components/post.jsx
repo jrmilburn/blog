@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import styles from './styles/post.module.css';
 import formatDate from './formatDate';
 
+import Comments from './comments';
+
 export default function Post() {
 
     const [data, setData] = useState(null);
@@ -46,6 +48,8 @@ export default function Post() {
             </div>
 
             <p>{data.post.content}</p>
+
+            <Comments postId={id} />
 
 
         </div>

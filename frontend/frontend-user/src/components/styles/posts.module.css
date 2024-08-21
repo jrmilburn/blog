@@ -1,0 +1,34 @@
+.post {
+    width: 80%;
+    margin: auto;
+    padding: 2rem;
+    border-bottom: 1px solid #838D8A;
+    display: flex;
+    justify-content: space-between;
+
+    transition: scale 0.2s;
+}
+
+.post:hover {
+    scale: 1.01;
+}
+
+.loading {
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+h1 {
+    font-size: 4rem;
+    color: #E98074;
+}
+
+a {
+
+    padding: 1rem;
+
+}

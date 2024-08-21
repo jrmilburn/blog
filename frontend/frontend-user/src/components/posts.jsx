@@ -44,9 +44,10 @@ export default function Posts() {
                 {data && data.posts.map((post, index) => (
                     <div key={index} className={styles["post"]}>
 
-                        <h3>{post.title}</h3>
-                        <p>{post.content}</p>
-                        <p>Created: {formatDate(post.createdAt)}</p>
+                        <div className="post-info">
+                            <h3>{post.title}</h3>
+                            <p>Created: {formatDate(post.createdAt)}</p>
+                        </div>
                         <Link to={`/blog/${post.id}`}>Read more</Link>
 
                     </div>

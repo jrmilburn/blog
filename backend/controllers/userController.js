@@ -56,7 +56,7 @@ async function createUser(req, res) {
                 }
             });
 
-            return res.redirect("/login");
+            return res.send(user);
 
         } catch(err) {
 

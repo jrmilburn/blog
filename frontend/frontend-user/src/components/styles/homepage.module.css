@@ -76,6 +76,7 @@
     aspect-ratio: 1;
     border: 2px solid black;
     border-radius: 1rem;
+    overflow: hidden;
 
 }
 
@@ -137,4 +138,12 @@
 
     animation: 0.5s ease 1s both fadein;
 
+}
+
+img {
+    position: relative;
+    width: 120%;
+    object-fit: contain;
+    transform: translate(-5%, -25%);
+    
 }
