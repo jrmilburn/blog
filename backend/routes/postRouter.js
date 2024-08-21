@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const postController = require("../controllers/postController");
+const commentController = require("../controllers/commentController");
 
 const postRouter = Router();
 
@@ -16,12 +17,12 @@ postRouter.delete("/:postid", postController.deletePost);
 
 /**Comments */
 
-/*postRouter.get("/:postid/comments")
+postRouter.get("/:postid/comments", commentController.getComments);
 
-postRouter.post("/:postid/comments")
+postRouter.post("/:postid/comments", commentController.createComment);
 
-postRouter.put("/:postid/comments/:commentid");
+postRouter.put("/:postid/comments/:commentid", commentController.updateComment);
 
-postRouter.delete("/:postid/comments/:commentid");*/
+postRouter.delete("/:postid/comments/:commentid", commentController.deleteComment);
 
 module.exports = postRouter;

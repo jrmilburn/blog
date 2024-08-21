@@ -28,20 +28,51 @@ async function getPost(req, res) {
 
 async function createPost(req, res) {
 
-    const post = {
-        title: "Hello world",
-        content: "Goodbye world!",
-        author: req.user,
+    //const authorId = req.user.id;
 
-    }
+    const post = await prisma.post.create({
+        data: {
+            title: req.body.title,
+            content: req.body.content,
+            author: {
+                connect: { id: req.body.authorId },
+            }
+        }
+    });
+
+    res.status(201).json(post);
 
 }
 
 async function editPost(req, res) {
 
+    const postId = req.params.postid;
+    const { title, content, published } = req.body;
+
+    const updatePost = await prisma.post.update({
+        where: {
+            id: postId,
+        },
+        data: {
+            title: title,
+            content: content,
+            published: published
+        }
+    });
+
+    return res.status(200).json(updatePost);
+
 }
 
 async function deletePost(req, res) {
+
+    const postId = req.params.postid;
+
+    const deletePost = await prisma.post.delete({
+        where: {
+            id: postId,
+        }
+    })
 
 }
 
