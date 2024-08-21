@@ -1,0 +1,53 @@
+.posts {
+
+    margin: 2rem 4rem;
+
+}
+
+.posts .post {
+
+    padding: 1rem 2rem;
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+
+}
+
+button {
+
+    background: none;
+    padding: 0.25rem 2rem;
+    border-radius: 0.25rem;
+
+    transition: color 0.3s, background-color 0.3s;
+}
+
+button:hover {
+
+    color: white;
+    background-color: black;
+    cursor: pointer;
+
+}
+
+form {
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+}
+
+form textarea {
+
+    background: none;
+
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+}
+
+.input {
+    display: flex;
+    gap: 1rem;
+}
