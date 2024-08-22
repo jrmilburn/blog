@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styles from './styles/comments.module.css';
 
+import Comment from './comment';
+
 export default function Comments() {
     
     const { postid } = useParams();
@@ -56,11 +58,56 @@ export default function Comments() {
                 throw new Error('Network response not ok');
             }
 
+            setNewComment('');
+
         } catch (err) {
             setError(err);
         }
 
-        setNewComment('');
+    }
+
+    const handleUpdate = async (commentid, newContent) => {
+
+        try {
+
+            const response = await fetch(`http://localhost:3000/posts/${postid}/comments/${commentid}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    content: newContent,
+            })});
+
+            if(!response.ok) {
+                throw new Error('Network response not ok');
+            }
+
+        } catch (err) {
+            setError(err);
+        }
+
+    }
+
+    const handleDelete = async (commentid) => {
+
+        try {
+
+            const response = await fetch(`http://localhost:3000/posts/${postid}/comments/${commentid}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }});
+
+            if(!response.ok) {
+                throw new Error('Network response not ok');
+            }
+
+        } catch (err) {
+            setError(err);
+        }
 
     }
 
@@ -73,21 +120,27 @@ export default function Comments() {
 
     return(
         <div className={styles["comments"]}>
-            {comments.comments.map(comment => {
-                    return (
-                        <div key={comment.id} className={styles["content"]}>
-                            <h3>{comment.post.title}, {comment.author.email}</h3>
-                            <p>{comment.content}</p>
-                            <p>{comment.createdAt}</p>
-                        </div>
-                    );
-                })}
+            {comments.comments
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))  // Sort by createdAt date descending
+            .map(comment => {
+                return (
+                    <Comment 
+                        key={comment.id}
+                        title={comment.post.title}
+                        content={comment.content}
+                        author={comment.author.email}
+                        created={comment.createdAt}
+                        onDelete={() => handleDelete(comment.id)}
+                        onUpdate={(newContent) => handleUpdate(comment.id, newContent)}
+                    />
+                );
+            })}
 
             <div className={styles["add-comment"]}>
                 <form onSubmit={handleSubmit}>
 
                     <div>
-                        <textarea name="comment" id="comment" rows={3} cols={50} onChange={handleChange}></textarea>
+                        <textarea name="comment" id="comment" rows={3} cols={50} onChange={handleChange} value={newComment}></textarea>
                     </div>
                     <button type='submit'>Post</button>
 
