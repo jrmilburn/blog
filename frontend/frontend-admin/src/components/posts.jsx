@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles/posts.module.css';
 
-export default function Posts() {
+
+export default function Posts({ user }) {
+
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -10,7 +14,6 @@ export default function Posts() {
     const [view, setView] = useState(true);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [newPost, setNewPost] = useState({title: '', content: ''});
 
     useEffect(() => {
         fetch('http://localhost:3000/posts')
@@ -21,45 +24,93 @@ export default function Posts() {
                 return resp.json();
             })
             .then(data => {
-                setPosts(data);
-                fetch(`http://localhost:3000/user/${data.posts.authorId}`);
+                setPosts(data.posts);
                 setLoading(false);
             })
             .catch(error => {
                 setError(error);
                 setLoading(false);
             })
-    }, []);
+    }, [posts]);
 
     const handleClick = () => {
 
-        view ? setView(false) : setView(true)
+        setView(!view);
 
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    }
-
-    async function deletePost(id) {
         try {
-            // Optimistically update the UI before making the fetch request
-            setPosts(prevUsers => prevUsers.filter(user => user.id !== id));
-    
-            // Perform the delete operation
-            const response = await fetch(`http://localhost:3000/posts/${id}`, {
-                method: 'DELETE',
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to delete the post');
+            const resp = await fetch('http://localhost:3000/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    title: title,
+                    content: content,
+                    published: true,
+            })});
+
+            if (!resp.ok) {
+                throw new Error('Failed to create post');
             }
-    
+
+            const createdPost = await resp.json();
+            setPosts((prevPosts) => [...prevPosts, createdPost]);
+
+            // Reset form and state
+            setTitle('');
+            setContent('');
+            setView(true);
+
+            // Navigate to the posts view
+            navigate("/posts");
+
         } catch (error) {
-            console.error("There was an error deleting the post:", error);
-            setError(error);
+            console.error('Error creating post:', error);
+            setError(error.message);
         }
+    };
+
+
+    const deletePost = async (postId) => {
+
+        try {
+            setPosts(prevPosts => prevPosts.filter(post => post.id  !== postId));
+
+
+            const resp = await fetch(`http://localhost:3000/posts/${postId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    title: title,
+                    content: content,
+                    published: true,
+                    author: {
+                        email: ''
+                    }
+                })
+            });
+
+            if (!resp.ok) {
+                throw new Error('Failed to delete the user');
+            }
+
+
+
+        } catch(err) {
+            setError(err);
+        }
+
     }
+    
     
 
     if(loading) return(
@@ -78,7 +129,7 @@ export default function Posts() {
             {view ? (
 
                 <div>
-                    {posts && posts.posts.map((post, index) => (
+                    {posts && posts.map((post, index) => (
                         <div className={styles["post"]} key={index}>
                             <div className={styles["details"]}>
                                 <h3>{post.title}</h3>
@@ -86,8 +137,9 @@ export default function Posts() {
                                 <p>{post.createdAt}</p>
                                 <p>{post.author.email}</p>
                             </div>
-                            <div className="interactions">
+                            <div className={styles["interactions"]}>
                                 <button onClick={() => deletePost(post.id)}>Delete</button>
+                                <Link to={`/posts/${post.id}/comments`}>View comments</Link>
                             </div>
                         </div>
                     ))}
@@ -98,32 +150,34 @@ export default function Posts() {
 
             
             ) : (
-                <form onSubmit={handleSubmit}>
-                    <div className={styles['input']}>
-                        <label htmlFor="title">Title:</label>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className={styles['input']}>
-                        <label htmlFor="content">Content:</label>
-                        <textarea
-                            id="content"
-                            name="content"
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                            rows="100" // Adjust rows for the height of the textarea
-                            cols="100" // Adjust cols for the width of the textarea
-                            required
-                        />
-                    </div>
-                    <button type="submit">Submit</button>
-                </form>
+                <div>
+                    <form>
+                        <div className={styles['input']}>
+                            <label htmlFor="title">Title:</label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className={styles['input']}>
+                            <label htmlFor="content">Content:</label>
+                            <textarea
+                                id="content"
+                                name="content"
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                                rows="100" // Adjust rows for the height of the textarea
+                                cols="125" // Adjust cols for the width of the textarea
+                                required
+                            />
+                        </div>
+                        <button type="submit" onClick={handleSubmit}>Submit</button>
+                    </form>
+                </div>
             )}
             <button onClick={handleClick}>
                 {view ? 'Create new post' : 'Cancel'}

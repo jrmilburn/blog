@@ -8,13 +8,18 @@
 
     padding: 1rem 2rem;
     display: flex;
-    width: 60%;
+    width: 80%;
     justify-content: space-between;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 
 }
 
-button {
+.post a {
+    text-decoration: none;
+    color: black;
+}
+
+button, .post a {
 
     background: none;
     padding: 0.25rem 2rem;
@@ -23,11 +28,18 @@ button {
     transition: color 0.3s, background-color 0.3s;
 }
 
-button:hover {
+button:hover, a:hover {
 
     color: white;
     background-color: black;
     cursor: pointer;
+
+}
+
+.posts form {
+
+    width: 80%;
+    max-width: 1000px;
 
 }
 
@@ -36,6 +48,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    align-items: center;
 
 }
 
@@ -45,9 +58,28 @@ form textarea {
 
     border: 1px solid #ccc;
     border-radius: 1rem;
+
+    padding: 4rem;
 }
 
 .input {
     display: flex;
+    justify-content: left;
     gap: 1rem;
 }
+
+.input input {
+
+    margin: 0 0 0 2rem;
+
+}
+
+.interactions {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
