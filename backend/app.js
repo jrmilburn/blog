@@ -5,6 +5,7 @@ const cors = require("cors");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { prisma } = require("./config/passport");
 const { adminRouter, postRouter, userRouter, authenticationRouter } = require("./routes/indexRouter");
+require("dotenv").config();
 
 const app = express();
 

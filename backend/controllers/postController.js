@@ -2,7 +2,13 @@ const { prisma } = require("../config/passport");
 
 async function getPosts(req, res) {
 
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+        include: {
+            author: true,   
+        }
+    });
+
+    console.log(posts);
 
     if(posts.length > 0){
         return res.json({
