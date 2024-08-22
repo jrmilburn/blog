@@ -3,7 +3,7 @@ const postController = require("../controllers/postController");
 const commentController = require("../controllers/commentController");
 const { passport } = require("../config/passport");
 
-const postRouter = Router();
+const postRouter = Router({mergeParams: true});
 
 /**Posts */
 

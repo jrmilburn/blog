@@ -10,21 +10,22 @@ const prisma = new PrismaClient();
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_SECRET, 
-}
+};
 
 const jwtVerify = async (jwtPayload, done) => {
     try {
         const user = await prisma.user.findUnique({
-            where: { id: jwtPayload.userid},
+            where: { id: jwtPayload.userId },  // Make sure this matches what's stored in the token
         });
 
-        if(!user) {
-            return done(null, false, {message: "User not found"});
+        if (!user) {
+            return done(null, false, { message: "User not found" });
         }
 
         return done(null, user);
-    } catch(err) {
+    } catch (err) {
         console.error(err);
+        return done(err, false);  // Pass the error to Passport
     }
 };
 
@@ -33,7 +34,7 @@ passport.use(strategy);
 
 const generateToken = (user) => {
     return jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-}
+};
 
 module.exports = {
     passport,

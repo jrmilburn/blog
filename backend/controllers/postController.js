@@ -38,19 +38,19 @@ async function getPost(req, res) {
 
 async function createPost(req, res) {
 
-    //const authorId = req.user.id;
+    console.log(req.body);
 
     const post = await prisma.post.create({
         data: {
             title: req.body.title,
             content: req.body.content,
             author: {
-                connect: { id: req.body.authorId },
+                connect: { id: req.user.id },
             }
         }
     });
 
-    res.status(201).json(post);
+    res.status(201);
 
 }
 

@@ -1,13 +1,12 @@
-const { Router }= require("express");
+const { Router } = require("express");
 const userController = require("../controllers/userController");
-const { passport } = require("../config/passport");
 
 const authenticationRouter = Router();
 
+// Route to register a new user
 authenticationRouter.post('/register', userController.createUser);
-authenticationRouter.post('/login', passport.authenticate("local", {
-    successRedirect: '/posts',
-    failureRedirect: '/login'
-}) ,userController.loginUser);
+
+// Route to log in a user and issue a JWT token
+authenticationRouter.post('/login', userController.loginUser);
 
 module.exports = authenticationRouter;

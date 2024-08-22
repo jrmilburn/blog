@@ -2,7 +2,14 @@ const { prisma } = require("../config/passport");
 
 async function getComments(req, res) {
 
-    const comments = await prisma.comment.findMany();
+    const { postid } = req.params;
+
+    const comments = await prisma.comment.findMany({
+        where: {
+            postId: postid
+        },
+        include: { author: true, post: true }
+    });
 
     return res.json({
         comments
@@ -12,17 +19,18 @@ async function getComments(req, res) {
 
 async function createComment(req, res) {
 
-    const postId = req.params.postid;
-    const { content, authorId } = req.body;
+    
+    const { content } = req.body;
+    const { postid } = req.params;
 
     const comment = await prisma.comment.create({
         data: {
             content: content,
             post: {
-                connect: {id: postId}
+                connect: {id: postid}
             },
             author: {
-                connect: {id: authorId}
+                connect: {id: req.user.id}
             }
         }
     });

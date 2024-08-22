@@ -71,31 +71,36 @@ async function createUser(req, res) {
 
 async function loginUser(req, res) {
     try {
+        console.log('Login attempt:', req.body);
+
         const user = await prisma.user.findUnique({
             where: {
                 email: req.body.email,
             }
         });
 
-        if(!user) {
-            return res.status(400).send("Invalid email or password");
+        if (!user) {
+            console.log('User not found');
+            return res.status(400).json({ message: "Invalid email or password" });
         }
 
         const isMatch = await bcrypt.compare(req.body.password, user.password);
 
-        if(!isMatch) {
-            return res.status(400).send("Invalid email or password");
+        if (!isMatch) {
+            console.log('Password does not match');
+            return res.status(400).json({ message: "Invalid email or password" });
         }
 
-        const token = generateToken();
+        const token = generateToken(user);
+        console.log('Login successful, token generated');
 
-        return res.json({ token });
-
-    } catch(err) {
-        console.error(err);
-        return res.status(500).send("Server error");
+        return res.status(200).json({ token, user });
+    } catch (err) {
+        console.error('Server error during login:', err);
+        return res.status(500).json({ message: "Server error" });
     }
 }
+
 
 async function updateUser(req, res) {
 
