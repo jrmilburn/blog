@@ -41,17 +41,20 @@ export default function Posts() {
         <AnimatedPage>
             <div>
                 <h1>Posts</h1>
-                {data && data.posts.map((post, index) => (
-                    <div key={index} className={styles["post"]}>
+                {data.posts &&
+                    data.posts
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))  // Sort by createdAt date descending
+                        .map((post, index) => (
+                            <div key={index} className={styles["post"]}>
+                                <div className="post-info">
+                                    <h3>{post.title}</h3>
+                                    <p>Created: {formatDate(post.createdAt)}</p>
+                                </div>
+                                <Link to={`/blog/${post.id}`}>Read more</Link>
+                            </div>
+                        ))
+}
 
-                        <div className="post-info">
-                            <h3>{post.title}</h3>
-                            <p>Created: {formatDate(post.createdAt)}</p>
-                        </div>
-                        <Link to={`/blog/${post.id}`}>Read more</Link>
-
-                    </div>
-                ))}
             </div>
         </AnimatedPage>
     );

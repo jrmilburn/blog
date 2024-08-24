@@ -139,6 +139,7 @@ export default function Posts({ user }) {
                             </div>
                             <div className={styles["interactions"]}>
                                 <button onClick={() => deletePost(post.id)}>Delete</button>
+                                <Link to={`/posts/${post.id}`}>Edit post</Link>
                                 <Link to={`/posts/${post.id}/comments`}>View comments</Link>
                             </div>
                         </div>
@@ -171,7 +172,7 @@ export default function Posts({ user }) {
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                                 rows="100" // Adjust rows for the height of the textarea
-                                cols="125" // Adjust cols for the width of the textarea
+                                cols="100" // Adjust cols for the width of the textarea
                                 required
                             />
                         </div>

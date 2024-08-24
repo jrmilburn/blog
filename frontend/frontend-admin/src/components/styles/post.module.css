@@ -1,0 +1,33 @@
+.postform {
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: right;
+    transform: translateX(75%);
+
+    padding: 1rem;
+
+}
+
+form textarea {
+
+    background: none;
+
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+
+    padding: 2rem;
+}
+
+.input {
+    display: flex;
+    justify-content: left;
+    gap: 1rem;
+}
+
+.input input {
+
+    margin: 0 2rem;
+
+}

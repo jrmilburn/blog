@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './styles/post.module.css';
 import formatDate from './formatDate';
+import { useNavigate } from 'react-router-dom';
 
 import Comments from './comments';
 
@@ -10,8 +11,11 @@ export default function Post() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [newComment, setNewComment] = useState('');
 
+    const token = localStorage.getItem('token');
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:3000/posts/${id}`)
@@ -29,7 +33,30 @@ export default function Post() {
                 setError(error);
                 setLoading(false);
             });
-    }, [id]);
+    }, [id, newComment]);
+
+    const addComment = async () => {
+
+        const resp = await fetch(`http://localhost:3000/posts/${id}/comments`, {
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    content: newComment,
+                })
+        });
+
+        if(!resp.ok) {
+            throw new Error('Network response not ok');
+        }
+
+        setNewComment('');
+
+        navigate(`/blog/${id}`);
+
+    }
 
     if (loading) return (
         <div >
@@ -50,6 +77,18 @@ export default function Post() {
             <p>{data.post.content}</p>
 
             <Comments postId={id} />
+
+            {token && (
+                <form onSubmit={(e) => {
+                    e.preventDefault(); 
+                    addComment();
+                }}>
+
+                <input type="text" name='comment' placeholder='Comment' value={newComment} onChange={(e) => setNewComment(e.target.value)} />
+
+                <button type='submit'>Submit</button>
+
+            </form>)}
 
 
         </div>

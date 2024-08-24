@@ -74,12 +74,17 @@ form textarea {
 
 }
 
+.details {
+    width: 75%;
+}
+
 .interactions {
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
+    gap: 0.5rem;
+    width: 25%rem;
 
 }
 

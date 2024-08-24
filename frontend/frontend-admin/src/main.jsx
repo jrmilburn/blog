@@ -6,6 +6,7 @@ import './index.css'
 import Root from './components/root';
 import Comments from './components/comments';
 import Posts from './components/posts';
+import Post from './components/post';
 import Users from './components/users';
 import Dashboard from './components/Dashboard';
 import Login from './components/login';
@@ -25,6 +26,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="/posts/:postid/comments" element={<Comments />} />
           <Route path="/posts" element={<Posts user={user}/>} />
+          <Route path="/posts/:postid" element={<Post user={user}/>} />
           <Route path="/users" element={<Users />} />
         </Route>
       </Route>

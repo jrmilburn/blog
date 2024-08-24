@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './styles/comments.module.css';
 
+import formatDate from './formatDate';
+
 export default function Comments({ postId }) {
 
     const [data, setData] = useState(null);
@@ -38,7 +40,8 @@ export default function Comments({ postId }) {
                 {data.comments.map(comment => {
                     return (
                         <div key={comment.id} className={styles["content"]}>
-                            <h3>{comment.author}</h3>
+                            <h3>{comment.author.name}</h3>
+                            <p>{formatDate(comment.createdAt)}</p>
                             <p>{comment.content}</p>
                         </div>
                     );
