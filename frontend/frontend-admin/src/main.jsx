@@ -11,6 +11,7 @@ import Users from './components/users';
 import Dashboard from './components/Dashboard';
 import Login from './components/login';
 import PrivateRoute from './components/privateroute';
+import Register from './components/register';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
+      <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login setToken={setToken} setUser={setUser} />} />  {/* Login route should not be under PrivateRoute */}
       <Route element={<PrivateRoute token={token} user={user} />}>  {/* PrivateRoute protects only routes that require auth */}
         <Route path='/' element={<Root />}>

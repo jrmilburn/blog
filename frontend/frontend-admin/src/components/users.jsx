@@ -10,7 +10,7 @@ export default function Users() {
     const [newUser, setNewUser] = useState({name: '', email: '', password: ''});
 
     useEffect(() => {
-        fetch('http://localhost:3000/user')
+        fetch('https://blog-api-top.adaptable.app/user')
             .then(resp => {
                 if(!resp.ok) {
                     throw new Error('Network response was not ok');
@@ -38,7 +38,7 @@ export default function Users() {
         e.preventDefault();
 
         try {
-            const resp = await fetch('http://localhost:3000/user', {
+            const resp = await fetch('https://blog-api-top.adaptable.app/user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export default function Users() {
             setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
     
             // Perform the delete operation
-            const response = await fetch(`http://localhost:3000/user/${id}`, {
+            const response = await fetch(`https://blog-api-top.adaptable.app/${id}`, {
                 method: 'DELETE',
             });
     

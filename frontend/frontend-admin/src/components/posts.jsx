@@ -16,7 +16,7 @@ export default function Posts({ user }) {
     const [content, setContent] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:3000/posts')
+        fetch('https://blog-api-top.adaptable.app/posts')
             .then(resp => {
                 if(!resp.ok) {
                     throw new Error('Network response was not ok');
@@ -43,7 +43,7 @@ export default function Posts({ user }) {
         e.preventDefault();
 
         try {
-            const resp = await fetch('http://localhost:3000/posts', {
+            const resp = await fetch('https://blog-api-top.adaptable.app/posts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function Posts({ user }) {
             setPosts(prevPosts => prevPosts.filter(post => post.id  !== postId));
 
 
-            const resp = await fetch(`http://localhost:3000/posts/${postId}`, {
+            const resp = await fetch(`https://blog-api-top.adaptable.app/posts/${postId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -16,7 +16,7 @@ export default function Post() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3000/posts/${postid}`)
+        fetch(`hhttps://blog-api-top.adaptable.app/posts/${postid}`)
             .then(response => {
                 if(!response.ok) {
                     throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ export default function Post() {
 
 
 
-            const resp = await fetch(`http://localhost:3000/posts/${postId}`, {
+            const resp = await fetch(`https://blog-api-top.adaptable.app/posts/${postId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

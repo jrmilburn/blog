@@ -15,7 +15,7 @@ export default function Comments() {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        fetch(`http://localhost:3000/posts/${postid}/comments`)
+        fetch(`https://blog-api-top.adaptable.app/posts/${postid}/comments`)
             .then(response => {
                 if(!response.ok) {
                     throw new Error('Network response was not ok');
@@ -44,7 +44,7 @@ export default function Comments() {
 
         try {
 
-            const response = await fetch(`http://localhost:3000/posts/${postid}/comments`, {
+            const response = await fetch(`https://blog-api-top.adaptable.app/posts/${postid}/comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export default function Comments() {
 
         try {
 
-            const response = await fetch(`http://localhost:3000/posts/${postid}/comments/${commentid}`, {
+            const response = await fetch(`https://blog-api-top.adaptable.app/posts/${postid}/comments/${commentid}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export default function Comments() {
 
         try {
 
-            const response = await fetch(`http://localhost:3000/posts/${postid}/comments/${commentid}`, {
+            const response = await fetch(`https://blog-api-top.adaptable.app/posts/${postid}/comments/${commentid}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
