@@ -18,7 +18,7 @@ export default function Post() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:3000/posts/${id}`)
+        fetch(`https://blog-api-top.adaptable.app/${id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -37,7 +37,7 @@ export default function Post() {
 
     const addComment = async () => {
 
-        const resp = await fetch(`http://localhost:3000/posts/${id}/comments`, {
+        const resp = await fetch(`https://blog-api-top.adaptable.app/${id}/comments`, {
             method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

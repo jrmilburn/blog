@@ -10,7 +10,7 @@ export default function Comments({ postId }) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/posts/${postId}/comments`)
+        fetch(`https://blog-api-top.adaptable.app/posts/${postId}/comments`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

@@ -11,7 +11,7 @@ export default function Posts() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:3000/posts')
+        fetch('https://blog-api-top.adaptable.app/posts')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
